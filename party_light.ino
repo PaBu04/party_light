@@ -1,3 +1,4 @@
+//----Libarys-----
 #include "FastLED.h"
 #include <AccelStepper.h>
 #include <ESP32Servo.h>
@@ -7,6 +8,9 @@
 #include <WebServer.h>
 #include <ESPmDNS.h>
 #include <Update.h>
+
+//-----Own Files-----
+#include "secrets.h"
 
 //-----LEDs-----
 #define DATA_PIN_OUTHER     18
