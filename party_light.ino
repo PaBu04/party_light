@@ -11,6 +11,7 @@
 
 //-----Own Files-----
 #include "secrets.h"
+#include "otaUpdaterWebfiles.h"
 
 //-----LEDs-----
 #define DATA_PIN_OUTHER     18
@@ -191,19 +192,10 @@ void Motors( void * pvParameters ) {
       lastMillis = millis();
       if (servoCurrentPosition == servoGoToPosition) { //UP
         servoGoToPosition = rand() % 180;
-        servoCurrentPosition = servoCurrentPosition + 1;
-        servoUp = true;
-      } else if(servoUp && servoCurrentPosition >= servoGoToPosition) { //DOWN
-        servoGoToPosition = rand() % 85;
-        servoCurrentPosition = servoCurrentPosition - 1;
-        servoUp = false;
+      } else if (servoGoToPosition > servoCurrentPosition) {
+        servoCurrentPosition += 1;
       } else {
-        if (servoGoToPosition >= 90) {
-          servoCurrentPosition += 1;
-        } else {
-          servoCurrentPosition -= 1;
-        }
-
+        servoCurrentPosition -= 1;
       }
       servoMotor.write(servoCurrentPosition);
     }
