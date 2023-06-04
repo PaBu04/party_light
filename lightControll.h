@@ -99,17 +99,27 @@ void controllWhiteLED() {
 
 void disco() {
   for (int i = 0 ; i < NUM_LEDS_CORE; i++) {
+    nblend(leds_core[i], CRGB(0, 0, 0), 64);
     CRGB color;
     if (millis() % 200 < 100) {
       int colorInd = millis() / 100 % 100 * 2.5;
-      color = CRGB((uint32_t)((colorInd + 47 * i) % 255), (uint32_t)((colorInd + 35 * i) % 255), (uint32_t)(colorInd));
+      color = CRGB((uint32_t)((colorInd * i) % 255), (uint32_t)((colorInd * i) % 255), (uint32_t)(colorInd));
+      if (i % 2 == 0) {
+        nblend(leds_core[i], color, 64);
+      }
+
     } else {
-      color = CRGB(0, 0, 0);
+      int colorInd = millis() / 100 + 100 % 100 * 2.5;
+      color = CRGB((uint32_t)((colorInd * i) % 255), (uint32_t)((colorInd * i) % 255), (uint32_t)(colorInd));
+      if (i % 2 != 0) {
+        nblend(leds_core[i], color, 64);
+      }
     }
+
     if(whiteOn) {
-      color = CRGB(255, 255, 255);
+      nblend(leds_core[i], CRGB(255, 255, 255), 64);
     }
-    nblend(leds_core[i], color, 64);
+
   }
 
 }
